@@ -36,14 +36,38 @@ except:
     print("ERRO!")
 
 
-#arquivos
-pathFolder = r"\\Exemplo\Caminho"
+#arquivos 
+pathFolder = r"\\10.44.250.4\M-Energia\Colaboradores\Alexya Silva\CPFL\Integrar"
 files = os.listdir(pathFolder)
-allpath = os.path.join(pathFolder, files[0])
-allpath
 
+#Salvar retorno da tela
+returns = []
 
-wait = WebDriverWait(navegador, 10) # Aguarda até o elemento estar visível
-navegador.switch_to.frame("cont") # mudando para o iframe
-input_element = wait.until(EC.visibility_of_element_located((By.ID, 'Upload1'))) #aguardo até a visibilidade do elemento e identifico 
-input_element.send_keys(allpath) #envio o arquivo 
+for file in files:
+    allpath = os.path.join(pathFolder, file)
+    
+    #Upload arquivo
+    wait = WebDriverWait(navegador, 10) # Aguarda até o elemento estar visível
+    navegador.switch_to.frame("cont") # mudando para o iframe
+    input_element = wait.until(EC.visibility_of_element_located((By.ID, 'Upload1'))) #aguardo até a visibilidade do elemento e identifico 
+    input_element.send_keys(allpath) #envio o arquivo
+
+    #Integrar click
+    navegador.find_element('xpath','//*[@id="Btncef"]').click()
+  
+
+    #salvar retorno tela
+    reotrno = navegador.find_element('xpath', '//*[@id="Label9"]')
+    if reotrno:
+        texto = navegador.find_element('xpath', '//*[@id="Label9"]').text
+    
+    navegador.switch_to.default_content() #saindo do iframe 
+    joinArquivoRetorno = [file, texto]
+    returns.append(joinArquivoRetorno)
+
+    
+
+#Criar Excel com resultado
+pathSalvar = r"\\10.44.250.4\M-Energia\Colaboradores\Alexya Silva\CPFL\resultado.xlsx"
+df = pd.DataFrame(returns, columns=['Arquivo', 'Retorno'])
+df.to_excel(pathSalvar, index=False)
