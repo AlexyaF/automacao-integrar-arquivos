@@ -1,84 +1,72 @@
 from selenium import webdriver
 import funcoes
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.common.exceptions import TimeoutException
+from ftplib import FTP
 from selenium.webdriver.chrome.service import Service 
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
-from selenium.webdriver.common.action_chains import ActionChains
 import os
-from time import sleep
 from dotenv import load_dotenv
 
 #Carregando palavras chaves
 load_dotenv()
 
+#Configurações FTP
+config ={
+    'host':os.getenv('HOST_FTP'),
+    'user':os.getenv('USER_FTP'),
+    'password':os.getenv('PASSWORD_FTP')
+}
 
-#Verificação arquivos, retirando tabulações, preparando para integração
-funcoes.verifArquivos()
+# Conectando ao servidor FTP
+try:
+    ftp = FTP(config['host'])
+    ftp.login(user=config['user'], passwd=config['password'])
+    print("Conexão estabelecida com FTP")
+except Exception as e:
+    print(f"Erro ao conectar ao FTP: {e}")
 
 
-#Abrir navegador/ site
 servico = Service(ChromeDriverManager().install()) # Identifica a versão do navegador atual e vai baixar o Chrome Driver mais recente.
 navegador = webdriver.Chrome()
-navegador.get(os.getenv('SITE'))
+navegador.set_page_load_timeout(10000) 
 
+folders=os.getenv("FOLDERS")
+folders_list = folders.strip("[]").split(",") # Removendo colchetes e transformando em lista
+folders_list = [folder.strip() for folder in folders_list] # Removendo espaços em branco ao redor de cada item (se houver)
 
-#Buscar o elemento e escrever o usuário
-navegador.find_element('xpath', '//*[@id="formulario"]/div[1]/input').send_keys(os.getenv('USER'))
-navegador.find_element('xpath', '//*[@id="formulario"]/div[2]/input').send_keys(os.getenv('PASSWORD'))
+#abrir navegador
+funcoes.abrir_driver(navegador)
 
-#Entrar
-navegador.find_element('xpath', '//*[@id="btentrar"]').click()
+#Para Cada CIA que tenha arquivos quais precisam ser importados
+for folder in folders_list:
+    try:
+        #Buscar arquivos no FTP
+        funcoes.mover_arquivos_processado(folder, ftp)
 
-#Buscar tela de integracao
-try:
-    navegador.find_element('xpath', '//*[@id="field5"]').send_keys("Retorno CPFL")
-    sleep(5)
+        #Verificação arquivos, retirando tabulações, preparando para integração
+        funcoes.verifArquivos()
+        
+        #Integrar
+        retorno = funcoes.integrar(navegador)
 
-    # Aguarda o elemento ficar visível
-    wait = WebDriverWait(navegador, 10)  # Substitua 'navegador' pelo nome do driver
-    element = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="field5-suggestions"]//span[text()="RETORNO CPFL"]')))
-    element.click()
-except:
-    print("ERRO!")
+        print(f"Processo concluído com sucesso para a pasta: {folder}")
 
-
-#arquivos 
-pathFolder = os.getenv('PATHFOLDER')
-files = os.listdir(pathFolder)
-
-#Salvar retorno da tela
-returns = []
-
-for file in files:
-    allpath = os.path.join(pathFolder, file)
+    except TimeoutException as e:
+        print(f"Erro de timeout durante o processamento da pasta {folder}: {e}")
     
-    #Upload arquivo
-    wait = WebDriverWait(navegador, 10) # Aguarda até o elemento estar visível
-    navegador.switch_to.frame("cont") # mudando para o iframe
-    input_element = wait.until(EC.visibility_of_element_located((By.ID, 'Upload1'))) #aguardo até a visibilidade do elemento e identifico 
-    input_element.send_keys(allpath) #envio o arquivo
+    except Exception as e:
+        # Captura qualquer outro erro
+        print(f"Erro inesperado durante o processamento da pasta {folder}: {e}")
 
-    #Integrar click
-    navegador.find_element('xpath','//*[@id="Btncef"]').click()
-  
 
-    #salvar retorno tela
-    reotrno = navegador.find_element('xpath', '//*[@id="Label9"]')
-    if reotrno:
-        texto = navegador.find_element('xpath', '//*[@id="Label9"]').text
-    
-    navegador.switch_to.default_content() #saindo do iframe 
-    joinArquivoRetorno = [file, texto]
-    returns.append(joinArquivoRetorno)
-
+print("Encerrando conexão FTP")
+ftp.quit()
 
 
 #Criar Excel com resultado
 pathSalvar = os.getenv('PATHSAVE')
-df = pd.DataFrame(returns, columns=['Arquivo', 'Retorno'])
+df = pd.DataFrame(retorno, columns=['Arquivo', 'Retorno'])
 df.to_excel(pathSalvar, index=False)
 
 #enviar e-mail
