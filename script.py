@@ -6,25 +6,11 @@ from ftplib import FTP
 from selenium.webdriver.chrome.service import Service 
 import pandas as pd
 import os
+import time
 from dotenv import load_dotenv
 
 #Carregando palavras chaves
 load_dotenv()
-
-#Configurações FTP
-config ={
-    'host':os.getenv('HOST_FTP'),
-    'user':os.getenv('USER_FTP'),
-    'password':os.getenv('PASSWORD_FTP')
-}
-
-# Conectando ao servidor FTP
-try:
-    ftp = FTP(config['host'])
-    ftp.login(user=config['user'], passwd=config['password'])
-    print("Conexão estabelecida com FTP")
-except Exception as e:
-    print(f"Erro ao conectar ao FTP: {e}")
 
 
 servico = Service(ChromeDriverManager().install()) # Identifica a versão do navegador atual e vai baixar o Chrome Driver mais recente.
@@ -38,17 +24,36 @@ folders_list = [folder.strip() for folder in folders_list] # Removendo espaços 
 #abrir navegador
 funcoes.abrir_driver(navegador)
 
+returns = []
+
 #Para Cada CIA que tenha arquivos quais precisam ser importados
 for folder in folders_list:
+    print(f'\n ===== INICIANDO {folder} =====\n')
+    ftp = funcoes.conexao_ftp()
     try:
         #Buscar arquivos no FTP
         funcoes.mover_arquivos_processado(folder, ftp)
 
+        #Buscar arquivos no FTP, txt fora das pastas camunda
+        funcoes.mover_arquivos_txt(folder, ftp)
+
         #Verificação arquivos, retirando tabulações, preparando para integração
         funcoes.verifArquivos()
         
-        #Integrar
-        retorno = funcoes.integrar(navegador)
+        try:
+            retorno = funcoes.integrar(navegador, returns)
+
+        except TimeoutException:
+            print(f"Timeout na tentativa. Aguardando 5 minutos antes de tentar novamente.")
+            time.sleep(300)  # Espera 5 minutos antes da nova tentativa
+            retorno = funcoes.integrar(navegador, returns)
+
+
+        except Exception as e:
+            print(f"Erro inesperado: {e}. Aguardando 5 minutos antes de tentar novamente.")
+            time.sleep(300)  # Espera 5 minutos antes da nova tentativa
+            retorno = funcoes.integrar(navegador, returns)
+
 
         print(f"Processo concluído com sucesso para a pasta: {folder}")
 
@@ -61,7 +66,7 @@ for folder in folders_list:
 
 
 print("Encerrando conexão FTP")
-ftp.quit()
+ftp.close()
 
 
 #Criar Excel com resultado
