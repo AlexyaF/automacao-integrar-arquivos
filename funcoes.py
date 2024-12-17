@@ -15,6 +15,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+def marcacao_cod(texto, tipo='sub'):
+    if tipo == 'titulo':
+        marcacao = "=" *15
+        return print(f"{marcacao} {texto} {marcacao}")
+    elif tipo == 'erro':
+        marcacao = "    • !!!"
+        return print(f"{marcacao} {texto}")
+    elif tipo == 'log':
+        marcacao = "    =>"
+        return print(f'{marcacao} {texto}')
+    else:
+        marcacao = "    •"
+        return print(f"{marcacao} {texto}")
+
 
 def conexao_ftp():
     #Configurações FTP
@@ -27,16 +41,16 @@ def conexao_ftp():
     try:
         ftp = FTP(config['host'])
         ftp.login(user=config['user'], passwd=config['password'])
-        print("===== Conexão estabelecida com FTP ===== ")
+        marcacao_cod('Conexão estabelecida com FTP')
     except Exception as e:
-        print(f"Erro ao conectar ao FTP: {e}")
+        marcacao_cod(f"Erro ao conectar ao FTP: {e}", 'erro')
     
     return ftp
 
 
 
 def verifArquivos():
-    print('===== VERIFICANDO ARQUIVO =====')
+    marcacao_cod("Verificação dos arquivos")
     path = os.getenv("PATHFOLDER")
     files = os.listdir(path)
 
@@ -53,7 +67,7 @@ def verifArquivos():
 
 
 def enviar_email_com_anexo(anexo=None):
-    print('===== ENVIANDO E-MAIL =====')
+    marcacao_cod("Mandando E-mail")
     data = datetime.today()
     data_atual = data.strftime("%d/%m/%Y")
     destinatario = os.getenv("DESTINATARIO")
@@ -75,14 +89,14 @@ def enviar_email_com_anexo(anexo=None):
         email.Body = corpo
         if anexo : email.Attachments.Add(anexo)
         email.Send()
-        print(f"Email enviado para {destinatario} ")
+        marcacao_cod(f"Email enviado para {destinatario} ", 'log')
     except Exception as e:
-        print(f"Erro ao enviar o email: {e}")
+        marcacao_cod(f"Erro ao enviar o email: {e}", 'erro')
   
 
 
 def mover_arquivos_processado(folder, ftp):
-    print('===== CONFERINDO ARQUIVOS INTEGRADOS NO FTP  =====')
+    marcacao_cod('Buscando arquivos no ftp, pastas de processados')
     pathLocal = os.getenv('PATHFOLDER_INTEGRADOS')
     integrar = os.getenv('PATHFOLDER')
     integrar_files= os.listdir(integrar)
@@ -92,7 +106,6 @@ def mover_arquivos_processado(folder, ftp):
     for folders in folderProcess:
         try:
             # Navegando e baixando arquivos das pastas remotas
-            print(f"Navegando para: {folder} em '{folders}'")
             ftp.cwd(f'/cobrconta/GMP/{folder}/0713464419/RetornoGMP/{folders}')
             files = ftp.nlst()
 
@@ -109,16 +122,16 @@ def mover_arquivos_processado(folder, ftp):
                     # Baixando o arquivo
                     with open(allpath, "wb") as local_file:
                         ftp.retrbinary(f"RETR {files}", local_file.write)
-                    print(f"Arquivo '{files}' movido para '{allpath}'")
+                    marcacao_cod(f"Arquivo '{files}' movido para '{allpath}'", 'log')
             else: 
-                print("Sem arquivos")
+                marcacao_cod(f"Sem arquivos", 'erro')
 
         except Exception as e:
-            print(f"Erro ao conectar ao FTP: {e}")
+            marcacao_cod(f"Erro ao conectar ao FTP: {e}", 'erro')
 
 
 def mover_integrados(file, allpath):
-    print('===== MOVENDO INTEGRADOS =====')
+    marcacao_cod("Armazenando e organizando arquivos integrados no servidor ")
 
     if 'D003' in file:
         folder = 'D003 - Santa Cruz'
@@ -139,7 +152,7 @@ def mover_integrados(file, allpath):
     elif 'PIRA' in file:
         folder = 'PIRA'
     else:
-        print("Sem pasta correspondente")
+        marcacao_cod("Sem pasta correspondente", 'erro')
 
 
     origem = allpath
@@ -150,13 +163,13 @@ def mover_integrados(file, allpath):
     shutil.copy(origem, destino_base_comparacao)
     #Mover arquivos para suas pastas pertencentes
     shutil.move(origem, destino)
-    print(f'Arquivo: "{file}", movido de "{origem}", para "{destino}"')
+    marcacao_cod(f'Arquivo: "{file}", movido de "{origem}", para "{destino}"', 'log')
 
 
 
 #Abrir navegador/ site
 def abrir_driver(navegador):
-    print('===== ABRINDO SITE =====')
+    marcacao_cod("Abrindo site", 'titulo')
     navegador.get(os.getenv('SITE'))
 
     #Buscar o elemento e passar o usuário
@@ -176,12 +189,12 @@ def abrir_driver(navegador):
         element = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="field5-suggestions"]//span[text()="RETORNO CPFL"]')))
         element.click()
     except:
-        print("ERRO!")
+        marcacao_cod("ERRO!", 'erro')
 
 
 
 def mover_arquivos_txt(folder, ftp):
-    print("===== BUSCANDO ARQUIVOS NAO INTEGRADOS FTP (TXT'S) =====")
+    marcacao_cod("Buscando arquivos não integrados FTP fora das pastas")
     pathLocal = os.getenv('PATHFOLDER_INTEGRADOS')
     integrar = os.getenv('PATHFOLDER')
     integrar_files= os.listdir(integrar)
@@ -194,7 +207,7 @@ def mover_arquivos_txt(folder, ftp):
         # Navega para a pasta do FTP
         ftp.cwd(f"/cobrconta/GMP/{folder}/0713464419/RetornoGMP")
     except Exception as e:
-        print(f"Erro ao conectar ao FTP: {e}")
+        marcacao_cod(f"Erro ao conectar ao FTP: {e}", 'erro')
         return  # Interrompe a execução em caso de erro
 
     try:
@@ -214,37 +227,47 @@ def mover_arquivos_txt(folder, ftp):
                     #Baixando o arquivo na pasta integrar
                     with open(allPath, "wb") as local_file:
                         ftp.retrbinary(f"RETR {file}", local_file.write)
-                        print(f"Arquivo '{file}' movido para '{allPath}'")
+                        marcacao_cod(f"Arquivo movido para '{allPath}'",'log')
 
                     #Mover dentro do FTP
                     ftp.cwd(f"/cobrconta/GMP/{folder}/0713464419/RetornoGMP/Processados")
                     # Fazer upload do arquivo para a pasta de destino
                     with open(allPath, "rb") as local_file:
                         ftp.storbinary(f"STOR {file}", local_file)
-                    print(f"Arquivo '{file}' enviado para '{ftp.pwd()}'")
+                    marcacao_cod(f"Arquivo enviado para '{ftp.pwd()}'",'log')
 
                     ftp.cwd(f"/cobrconta/GMP/{folder}/0713464419/RetornoGMP")  # Retorna ao diretório original
                     ftp.delete(f"/cobrconta/GMP/{folder}/0713464419/RetornoGMP/{file}") #Apaga
-                    print(f"Arquivo '{file}' deletado de '{ftp.pwd()}'")
+                    marcacao_cod(f"Arquivo deletado de '{ftp.pwd()}'", 'log')
 
     except UnicodeDecodeError as e:
-        print(f"Erro de decodificação: {e}")
+        marcacao_cod(f"Erro de decodificação: {e}", 'erro')
     except Exception as e:
-        print(f"Erro ao listar ou processar arquivos: {e}")
+        marcacao_cod(f"Erro ao listar ou processar arquivos: {e}", 'erro')
 
 
 
 #Buscar arquivos na pasta de integrar
 def integrar(navegador, returns):
+    #função que localiza o retorno indicando o fim da integração
+    def localizar_retorno():
+        retorno_element = WebDriverWait(navegador, 10000).until(
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="Label9"]'))
+        )
+        texto = retorno_element.text
+        return texto
+        
     # Logando tempo de execução
     start_time = time.time()
 
-    print('===== INICIANDO INTEGRAÇÃO =====')
+    marcacao_cod("Iniciando integração")
     pathFolder = os.getenv('PATHFOLDER')
     files = os.listdir(pathFolder)
 
     for file in files:
+        file_start_time = time.time()
         allpath = os.path.join(pathFolder, file)
+        texto = None  # Para armazenar o status do processamento
         
         #Upload arquivo
         wait = WebDriverWait(navegador, 10000) # Aguarda até o elemento estar visível
@@ -254,35 +277,46 @@ def integrar(navegador, returns):
 
         #Integrar click
         navegador.find_element('xpath','//*[@id="Btncef"]').click()
-    
 
+
+        
         try:
-            file_start_time = time.time()
-            retorno_element = WebDriverWait(navegador, 10000).until(
-                EC.visibility_of_element_located((By.XPATH, '//*[@id="Label9"]'))
-            )
-            texto = retorno_element.text
-            elapsed_time = time.time() - file_start_time  # Fim do tempo
-            print(f"===== CONCLUÍDO PARA: {file}. Tempo: {elapsed_time:.2f} segundos =====")
+            texto = localizar_retorno()
             try:
                 mover_integrados(file, allpath)
             except Exception as e:
-                print(f"Erro ao mover arquivo {file}: {e}")
+                marcacao_cod(f"Erro ao mover arquivo {file}: {e}", 'erro')
 
         except TimeoutException:
             # Captura exclusivamente erros de tempo limite
-            print("Tempo limite excedido ao esperar pela integração.")
-            texto = "Erro: tempo limite excedido."
+            marcacao_cod("Tempo limite excedido ao esperar pela integração.", 'erro')
+            navegador.switch_to.default_content()  # Sai do iframe
+            try:
+                sleep(250)
+                marcacao_cod("TENTANDO NOVAMENTE APÓS 4 MINUTOS")
+                texto = localizar_retorno()
+                try:
+                    mover_integrados(file, allpath)
+                except Exception as e:
+                    marcacao_cod(f"Erro ao mover arquivo {file}: {e}", 'erro')
+                    
+            except TimeoutException:
+                 marcacao_cod("Erro de timeout", 'erro')
+                 texto = "Erro: tempo limite excedido."     
+
         except Exception as e:
             # Captura erros gerais
-            print(f"Erro inesperado ao processar o arquivo {file}: {e}")
+            marcacao_cod(f"Erro inesperado ao processar o arquivo {file}: {e}", 'erro')
             texto = f"Erro inesperado: {e}"
         finally:
             navegador.switch_to.default_content()  # Sai do iframe   
+        
+        elapsed_time = time.time() - file_start_time  # Fim do tempo
+        marcacao_cod(f"CONCLUÍDO PARA: {file}. Tempo: {elapsed_time:.2f} segundos")
 
         joinArquivoRetorno = [file, texto]
         returns.append(joinArquivoRetorno)
-    print(f"===== PROCESSAMENTO TOTAL FINALIZADO. Tempo total: {time.time() - start_time:.2f} segundos =====")
+    marcacao_cod(f"PROCESSAMENTO TOTAL FINALIZADO. Tempo total: {time.time() - start_time:.2f} segundos", "titulo")
     return returns
 
 
