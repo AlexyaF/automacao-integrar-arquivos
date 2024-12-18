@@ -28,7 +28,7 @@ returns = []
 
 #Para Cada CIA que tenha arquivos quais precisam ser importados
 for folder in folders_list:
-    print(f'\n ===== INICIANDO {folder} =====\n')
+    funcoes.marcacao_cod(f"INICIANDO {folder}", "titulo")
     ftp = funcoes.conexao_ftp()
     try:
         #Buscar arquivos no FTP
@@ -44,35 +44,38 @@ for folder in folders_list:
             retorno = funcoes.integrar(navegador, returns)
 
         except TimeoutException:
-            print(f"Timeout na tentativa. Aguardando 5 minutos antes de tentar novamente.")
-            time.sleep(300)  # Espera 5 minutos antes da nova tentativa
+            funcoes.marcacao_cod('Timeout na tentativa. Aguardando 5 minutos antes de tentar novamente.', 'erro')
+            navegador.switch_to.default_content()  # Sai do iframe
+            time.sleep(300)  # Espera 5 minutos antes da nova tentativa com o mesmo arquivo
             retorno = funcoes.integrar(navegador, returns)
 
 
         except Exception as e:
-            print(f"Erro inesperado: {e}. Aguardando 5 minutos antes de tentar novamente.")
-            time.sleep(300)  # Espera 5 minutos antes da nova tentativa
+            funcoes.marcacao_cod(f"Erro inesperado: {e}. Aguardando 5 minutos antes de tentar novamente.", 'erro')
+            navegador.switch_to.default_content()  # Sai do iframe
+            time.sleep(300)  # Espera 5 minutos antes da nova tentativa com o mesmo arquivo
             retorno = funcoes.integrar(navegador, returns)
 
 
-        print(f"Processo concluído com sucesso para a pasta: {folder}")
+        funcoes.marcacao_cod(f"Processo concluído com sucesso para a pasta: {folder}", 'titulo')
 
     except TimeoutException as e:
-        print(f"Erro de timeout durante o processamento da pasta {folder}: {e}")
+        funcoes.marcacao_cod(f"Erro de timeout durante o processamento da pasta {folder}: {e}", 'erro')
     
     except Exception as e:
         # Captura qualquer outro erro
-        print(f"Erro inesperado durante o processamento da pasta {folder}: {e}")
+        funcoes.marcacao_cod(f"Erro inesperado durante o processamento da pasta {folder}: {e}", 'erro')
 
 
-print("Encerrando conexão FTP")
+funcoes.marcacao_cod("Encerrando conexão FTP", 'titulo')
 ftp.close()
 
 
-#Criar Excel com resultado
-pathSalvar = os.getenv('PATHSAVE')
-df = pd.DataFrame(retorno, columns=['Arquivo', 'Retorno'])
-df.to_excel(pathSalvar, index=False)
+if retorno:
+    #Criar Excel com resultado
+    pathSalvar = os.getenv('PATHSAVE')
+    df = pd.DataFrame(retorno, columns=['Arquivo', 'Retorno'])
+    df.to_excel(pathSalvar, index=False)
 
-#enviar e-mail
-funcoes.enviar_email_com_anexo(pathSalvar)
+    #enviar e-mail
+    funcoes.enviar_email_com_anexo(pathSalvar)
