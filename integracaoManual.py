@@ -17,25 +17,24 @@ returns = []
 
 servico = Service(ChromeDriverManager().install()) # Identifica a versão do navegador atual e vai baixar o Chrome Driver mais recente.
 navegador = webdriver.Chrome()
-navegador.set_page_load_timeout(10000) 
+navegador.set_page_load_timeout(10000)
 
+funcoes.verifArquivos()
 funcoes.abrir_driver(navegador)
 
 try:
     retorno = funcoes.integrar(navegador, returns)
 
-except TimeoutException:
-    funcoes.marcacao_cod('Timeout na tentativa. Aguardando 5 minutos antes de tentar novamente.', 'erro')
+except TimeoutException as e:
+    funcoes.marcacao_cod('Timeout na tentativa.', 'erro')
     navegador.switch_to.default_content()  # Sai do iframe
-    time.sleep(300)  # Espera 5 minutos antes da nova tentativa
-    retorno = funcoes.integrar(navegador, returns)
+    funcoes.email_erro("Integração", e)
 
 
 except Exception as e:
-    funcoes.marcacao_cod(f"Erro inesperado: {e}. Aguardando 5 minutos antes de tentar novamente.", 'erro')
+    funcoes.marcacao_cod(f"Erro inesperado: {e}.", 'erro')
     navegador.switch_to.default_content()  # Sai do iframe
-    time.sleep(300)  # Espera 5 minutos antes da nova tentativa
-    retorno = funcoes.integrar(navegador, returns)
+    funcoes.email_erro("Integração", e)
 
 
 #Criar Excel com resultado
