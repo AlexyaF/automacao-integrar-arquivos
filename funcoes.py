@@ -347,7 +347,7 @@ def integrar(navegador, returns):
             
         except TimeoutException:
             marcacao_cod(f"Timeout ao processar arquivo {file}. Tentando novamente...", "erro")
-            sleep(160)  # Aguarda antes de tentar novamente
+            sleep(190)  # Aguarda antes de tentar novamente
             navegador.switch_to.default_content()
             try:
                 texto = localizar_retorno()
@@ -359,7 +359,7 @@ def integrar(navegador, returns):
 
         except WebDriverException as e:
             marcacao_cod(f"Erro no Selenium ao processar o arquivo {file}: {e}. Tentando novamente...", "erro")
-            sleep(160)  # Aguarda antes de tentar novamente
+            sleep(190)  # Aguarda antes de tentar novamente
             try:
                 texto = localizar_retorno()
                 mover_integrados(file, allpath)
@@ -371,7 +371,7 @@ def integrar(navegador, returns):
 
         except Exception as e:
             marcacao_cod(f"Erro inesperado ao processar o arquivo {file}: {e}. Tentando novamente...", "erro")
-            sleep(160)  # Aguarda antes de tentar novamente
+            sleep(190)  # Aguarda antes de tentar novamente
             try:
                 texto = localizar_retorno()
                 mover_integrados(file, allpath)
