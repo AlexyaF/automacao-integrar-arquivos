@@ -104,7 +104,7 @@ def enviar_email_com_anexo(anexo=None):
     else:
         copia = []
 
-    assunto = f"****TESTE**** Integração CPFL - {data_atual}"
+    assunto = f"Integração CPFL - {data_atual}"
     corpo  = f"Segue em anexo casos que passaram pelo script de integração."
     try:
         outlook = win32.Dispatch('Outlook.Application')
@@ -133,8 +133,8 @@ def email_erro(file, erro):
     else:
         copia = []
 
-    assunto = f"****TESTE**** Integração CPFL ERRO!!! - {data_atual}"
-    corpo  = f"Segue arquivo e erro abaixo.\n {file} - Erro: {erro}"
+    assunto = f" ERRO!!! - Integração CPFL - {data_atual}"
+    corpo  = f"Segue arquivo e erro abaixo.\n{file} - Erro: {erro}"
 
     try:
         outlook = win32.Dispatch('Outlook.Application')
