@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
-import time
+from datetime import datetime, timedelta
 from time import sleep
 from dotenv import load_dotenv
 
@@ -302,6 +302,22 @@ def mover_arquivos_txt(folder, ftp):
     except Exception as e:
         marcacao_cod(f"Erro ao listar ou processar arquivos: {e}", 'erro')
         email_erro('Erro Erro ao listar ou processar arquivos', e)
+
+
+#Verific data arquivo
+def verifc_data_arquivo():
+    move_to = os.getenv("PATHFOLDER_BACEN")
+    diff5Days = datetime.today() - timedelta(days=5)
+    path = os.getenv("PATHFOLDER")
+    filesNames = os.listdir(path)
+    for file in filesNames:
+        date = file[16:24]
+        fileDate = datetime.strptime(date, "%Y%m%d")
+        if fileDate.date() < diff5Days.date():
+            filepath= os.path.join(path, file)
+            pathmove = os.path.join(move_to, path)
+            shutil.move(filepath, move_to)
+            print(f"Arquivo '{file}' movido para a pasta Bacen pois tem mais de  dias de diferença ")
 
 
 
