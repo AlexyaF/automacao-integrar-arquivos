@@ -337,14 +337,14 @@ def integrar(navegador, returns):
             raise  # Repassa o erro para que o `try` principal lide com ele
         
     # Logando tempo de execução
-    start_time = time.time()
+    start_time = datetime.time()
 
     marcacao_cod("Iniciando integração")
     pathFolder = os.getenv('PATHFOLDER')
     files = os.listdir(pathFolder)
 
     for file in files:
-        file_start_time = time.time()
+        file_start_time = datetime.time.now()
         allpath = os.path.join(pathFolder, file)
         texto = None
         try:
@@ -372,6 +372,8 @@ def integrar(navegador, returns):
                 marcacao_cod(f"Erro ao localizar retorno do arquivo {file}: {e}", "erro")
                 texto = f"Erro de retorno"
                 email_erro(file, e)
+                joinArquivoRetorno = [file, e]
+                returns.append(joinArquivoRetorno)        
 
         except WebDriverException as e:
             marcacao_cod(f"Erro no Selenium ao processar o arquivo {file}: {e}. Tentando novamente...", "erro")
@@ -383,8 +385,9 @@ def integrar(navegador, returns):
                 marcacao_cod(f"Erro ao localizar retorno do arquivo {file}: {e}", "erro")
                 texto = f"Erro de retorno"
                 email_erro(file, e)
-
-
+                joinArquivoRetorno = [file, e]
+                returns.append(joinArquivoRetorno)
+                
         except Exception as e:
             marcacao_cod(f"Erro inesperado ao processar o arquivo {file}: {e}. Tentando novamente...", "erro")
             sleep(190)  # Aguarda antes de tentar novamente
@@ -395,17 +398,19 @@ def integrar(navegador, returns):
                 marcacao_cod(f"Erro ao localizar retorno do arquivo {file}: {e}", "erro")
                 texto = f"Erro de retorno"
                 email_erro(file, e)
+                joinArquivoRetorno = [file, e]
+                returns.append(joinArquivoRetorno)   
             
         finally:
             navegador.switch_to.default_content()
 
-        elapsed_time = time.time() - file_start_time
+        elapsed_time = datetime.time() - file_start_time
         marcacao_cod(f"Concluído para: {file}. Tempo: {elapsed_time:.2f} segundos")
 
         joinArquivoRetorno = [file, texto]
         returns.append(joinArquivoRetorno)
         
-    marcacao_cod(f"PROCESSAMENTO TOTAL FINALIZADO. Tempo total: {time.time() - start_time:.2f} segundos", "titulo")
+    marcacao_cod(f"PROCESSAMENTO TOTAL FINALIZADO. Tempo total: {datetime.time() - start_time:.2f} segundos", "titulo")
     return returns
 
 
