@@ -31,13 +31,13 @@ for folder in folders_list:
     funcoes.marcacao_cod(f"INICIANDO {folder}", "titulo")
     ftp = funcoes.conexao_ftp()
     try:
-        # #Buscar arquivos no FTP
-        # funcoes.mover_arquivos_processado(folder, ftp)
+        #Buscar arquivos no FTP
+        funcoes.mover_arquivos_processado(folder, ftp)
 
-        # #if folder not in ['D003', 'D007', 'D006', 'D005', 'D004']:
-        # if folder != 'D003':
-        #     #Buscar arquivos no FTP, txt fora das pastas camunda
-        #     funcoes.mover_arquivos_txt(folder, ftp)
+        #if folder not in ['D003', 'D007', 'D006', 'D005', 'D004']:
+        if folder != 'D003':
+            #Buscar arquivos no FTP, txt fora das pastas camunda
+            funcoes.mover_arquivos_txt(folder, ftp)
 
         #Verificação arquivos, retirando tabulações, preparando para integração
         funcoes.verifArquivos()
