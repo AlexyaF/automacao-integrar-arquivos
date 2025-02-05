@@ -41,6 +41,9 @@ for folder in folders_list:
 
         #Verificação arquivos, retirando tabulações, preparando para integração
         funcoes.verifArquivos()
+
+        #Garantir que datas antigas nao sejam processadas antes de serem análisadas
+        funcoes.verifc_data_arquivo
         
         try:
             retorno = funcoes.integrar(navegador, returns)
