@@ -1,6 +1,5 @@
 import os
 import win32com.client as win32
-from datetime import datetime
 from ftplib import FTP
 import shutil
 from selenium.webdriver.common.by import By
@@ -8,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from datetime import datetime, timedelta
+import time
 from time import sleep
 from dotenv import load_dotenv
 
@@ -337,14 +337,14 @@ def integrar(navegador, returns):
             raise  # Repassa o erro para que o `try` principal lide com ele
         
     # Logando tempo de execução
-    start_time = datetime.time()
+    start_time = time.time()
 
     marcacao_cod("Iniciando integração")
     pathFolder = os.getenv('PATHFOLDER')
     files = os.listdir(pathFolder)
 
     for file in files:
-        file_start_time = datetime.time.now()
+        file_start_time = time.time()
         allpath = os.path.join(pathFolder, file)
         texto = None
         try:
@@ -404,13 +404,13 @@ def integrar(navegador, returns):
         finally:
             navegador.switch_to.default_content()
 
-        elapsed_time = datetime.time() - file_start_time
+        elapsed_time =time.time() - file_start_time
         marcacao_cod(f"Concluído para: {file}. Tempo: {elapsed_time:.2f} segundos")
 
         joinArquivoRetorno = [file, texto]
         returns.append(joinArquivoRetorno)
         
-    marcacao_cod(f"PROCESSAMENTO TOTAL FINALIZADO. Tempo total: {datetime.time() - start_time:.2f} segundos", "titulo")
+    marcacao_cod(f"PROCESSAMENTO TOTAL FINALIZADO. Tempo total: {time.time() - start_time:.2f} segundos", "titulo")
     return returns
 
 
