@@ -34,8 +34,8 @@ for folder in folders_list:
         #Buscar arquivos no FTP
         funcoes.mover_arquivos_processado(folder, ftp)
 
-        #if folder not in ['D003', 'D007', 'D006', 'D005', 'D004']:
-        if folder != 'D003':
+       
+        if folder != 'D010': #exemplo de numeração de pasta
             #Buscar arquivos no FTP, txt fora das pastas camunda
             funcoes.mover_arquivos_txt(folder, ftp)
 
