@@ -159,7 +159,7 @@ def mover_arquivos_processado(folder, ftp):
     for folders in folderProcess:
         try:
             # Navegando e baixando arquivos das pastas remotas
-            ftp.cwd(f'/cobrconta/GMP/{folder}/0713464419/RetornoGMP/{folders}')
+            ftp.cwd(f'/ex/ex/{exfolder}/ex/exfolder/{folders}')
             files = ftp.nlst()
 
             if files:
@@ -240,7 +240,7 @@ def abrir_driver(navegador):
 
         # Aguarda o elemento ficar visível
         wait = WebDriverWait(navegador, 10000)  # Substitua 'navegador' pelo nome do driver
-        element = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="field5-suggestions"]//span[text()="RETORNO CPFL"]')))
+        element = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="field5-suggestions"]//span[text()="RETORNO"]')))
         element.click()
     except Exception as e:
         marcacao_cod("ERRO!", 'erro')
@@ -260,7 +260,7 @@ def mover_arquivos_txt(folder, ftp):
         ftp.encoding = 'latin-1'  
 
         # Navega para a pasta do FTP
-        ftp.cwd(f"/cobrconta/GMP/{folder}/0713464419/RetornoGMP")
+        ftp.cwd(f'/ex/ex/{exfolder}/ex/exfolder/{folders}')
     except Exception as e:
         marcacao_cod(f"Erro ao conectar ao FTP: {e}", 'erro')
         email_erro(f"Erro ao conectar ftp {folder}", e)
@@ -286,14 +286,14 @@ def mover_arquivos_txt(folder, ftp):
                         marcacao_cod(f"Arquivo movido para '{allPath}'",'log')
 
                     #Mover dentro do FTP
-                    ftp.cwd(f"/cobrconta/GMP/{folder}/0713464419/RetornoGMP/Processados")
+                    ftp.cwd(f'/ex/ex/{exfolder}/ex/exfolder/{folders}')
                     # Fazer upload do arquivo para a pasta de destino
                     with open(allPath, "rb") as local_file:
                         ftp.storbinary(f"STOR {file}", local_file)
                     marcacao_cod(f"Arquivo enviado para '{ftp.pwd()}'",'log')
 
-                    ftp.cwd(f"/cobrconta/GMP/{folder}/0713464419/RetornoGMP")  # Retorna ao diretório original
-                    ftp.delete(f"/cobrconta/GMP/{folder}/0713464419/RetornoGMP/{file}") #Apaga
+                    ftp.cwd(f'/ex/ex/{exfolder}/ex/exfolder/{folders}')  # Retorna ao diretório original
+                    ftp.delete(f'/ex/ex/{exfolder}/ex/exfolder/{folders}') #Apaga
                     marcacao_cod(f"Arquivo deletado de '{ftp.pwd()}'", 'log')
 
     except UnicodeDecodeError as e:
