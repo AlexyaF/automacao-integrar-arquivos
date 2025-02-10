@@ -9,6 +9,7 @@
 ✔️ Geração de um relatório em Excel  
 ✔️ Envio automático do relatório para os líderes da equipe  
 
+
 **🛠️ Tecnologias Utilizadas**
 - Python 🐍
 - Selenium para automação web
