@@ -30,7 +30,7 @@
     2- Criar arquivo .env  
     <sub> O arquivo .env não deve ser comitado no Git. Para garantir isso, adicione o arquivo .env ao arquivo .gitignore </sub>  
     `PASS=EX859`   
-    3- Importar biblioteca e utilizar funçãopara carregar variáves   
+    3- Importar biblioteca e utilizar função para carregar variáves   
      ```
      from dotenv import load_dotenv #importando biblioteca para o arquivo
 
