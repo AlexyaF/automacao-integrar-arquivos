@@ -159,7 +159,7 @@ def mover_arquivos_processado(folder, ftp):
     for folders in folderProcess:
         try:
             # Navegando e baixando arquivos das pastas remotas
-            ftp.cwd(f'/ex/ex/{exfolder}/ex/exfolder/{folders}')
+            ftp.cwd(f'/ex/ex/{folderProcess}/ex/exfolder/{folders}')
             files = ftp.nlst()
 
             if files:
