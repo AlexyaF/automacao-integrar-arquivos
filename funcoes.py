@@ -187,24 +187,24 @@ def mover_arquivos_processado(folder, ftp):
 def mover_integrados(file, allpath):
     marcacao_cod("Armazenando e organizando arquivos integrados no servidor ")
 
-    if 'D003' in file:
-        folder = 'D003 - Santa Cruz'
-    elif 'D004' in file:
-        folder = 'D004 - Leste Paulista'
-    elif 'D005' in file:
-        folder = 'D005 - Sul Paulista'
-    elif 'D006' in file:
-        folder = 'D006 - Jaguari'
-    elif 'D007' in file:
-        folder = 'D007 - Mococa'
-    elif 'D008' in file:
-        folder = 'D008 - RGE'
-    elif 'D009' in file:
-        folder = 'D009 - RGE SUL'
-    elif 'CPFL' in file:
-        folder = 'CPFL'
-    elif 'PIRA' in file:
-        folder = 'PIRA'
+    if 'exNumberFolder' in file:
+        folder = 'exNameFolder'
+    elif 'exNumberFolder' in file:
+        folder = 'exNameFolder'
+    elif 'exNumberFolder' in file:
+        folder = 'exNameFolder'
+    elif 'exNumberFolder' in file:
+        folder = 'exNameFolder'
+    elif 'exNumberFolder' in file:
+        folder = 'exNameFolder'
+    elif 'exNumberFolder' in file:
+        folder = 'exNameFolder'
+    elif 'exNumberFolder' in file:
+        folder = 'exNameFolder'
+    elif 'exNumberFolder' in file:
+        folder = 'exNameFolder'
+    elif 'exNumberFolder' in file:
+        folder = 'exNameFolder'
     else:
         marcacao_cod("Sem pasta correspondente", 'erro')
 
