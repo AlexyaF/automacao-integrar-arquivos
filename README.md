@@ -21,3 +21,19 @@
 - `mover_arquivos_processado` → Responsável por verificar e mover arquivos já integrados para as pastas corretas. Se um arquivo for enviado para a pasta de "processado" por engano, ele ainda será integrado, minimizando falhas na automação.
 - `mover_arquivos_txt` → Identifica arquivos que ainda não foram processados (aqueles que não estão em nenhuma pasta específica). Após o processamento, a função move os arquivos para a pasta de "processado".
 - `integrar` → Responsável pelo upload dos arquivos na interface web, incluindo tratamento de exceções, espera de resposta e armazenamento dos resultados.
+
+  ### **📚 Aprendizados com o Projeto**
+  - Biblioteca `dotenv`: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.
+    **código fonte**
+    <sub> O arquivo .env deve estar sempre contigo no arquivo .gitignore para fazer jus a sua proposta de manter informações sensíveis fora do código fonte </sub>
+     ```
+     from dotenv import load_dotenv #importando biblioteca para o arquivo
+
+     load_dotenv() #chamando função responsável por carregar variáveis no código fonte
+
+     password = os.getenv("PASS") #exemplo de chamada váriavel 
+     ```
+     **Arquivo .env**
+    `PASS=EX859`  
+  - Comparação entre listas sem a necessidade de um loop:
+  - Usar console navegador (DevTools):
