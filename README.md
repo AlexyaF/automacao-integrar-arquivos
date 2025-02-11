@@ -23,21 +23,21 @@
 - `integrar` → Responsável pelo upload dos arquivos na interface web, incluindo tratamento de exceções, espera de resposta e armazenamento dos resultados.
 
   ### **📚 Aprendizados com o Projeto**
-  - Biblioteca `dotenv`: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.
+  - Biblioteca `dotenv`: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.  
     **Como usar**  
     1- Instalar biblioteca:  
-    `pip install python-dotenv`
+    `pip install python-dotenv`  
     2- Criar arquivo .env  
     <sub> O arquivo .env não deve ser comitado no Git. Para garantir isso, adicione o arquivo .env ao arquivo .gitignore </sub>  
     `PASS=EX859`   
-    3- Importar biblioteca e utilizar funçãopara carregar variáves  
+    3- Importar biblioteca e utilizar funçãopara carregar variáves   
      ```
      from dotenv import load_dotenv #importando biblioteca para o arquivo
 
      load_dotenv() #chamando função responsável por carregar variáveis no código fonte
 
      password = os.getenv("PASS") #exemplo de chamada váriavel 
-     ```
+     ```  
 
   - Comparação entre listas sem a necessidade de um loop:
   - Usar console navegador (DevTools):
