@@ -26,7 +26,10 @@
   - Biblioteca `dotenv`: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.  
     **💻 Como usar**  
     1- Instalar biblioteca:  
-    `pip install python-dotenv`  
+    ```
+    _terminal_  
+    pip install python-dotenv
+    ```  
     2- Criar arquivo .env  
     <sub> O arquivo .env não deve ser comitado no Git. Para garantir isso, adicione o arquivo .env ao arquivo .gitignore </sub>  
     `PASS=EX859`   
