@@ -306,7 +306,7 @@ def mover_arquivos_txt(folder, ftp):
 
 #Verific data arquivo
 def verifc_data_arquivo():
-    move_to = os.getenv("PATHFOLDER_BACEN")
+    move_to = os.getenv("PATHFOLDER")
     diff5Days = datetime.today() - timedelta(days=5)
     path = os.getenv("PATHFOLDER")
     filesNames = os.listdir(path)
@@ -317,7 +317,7 @@ def verifc_data_arquivo():
             filepath= os.path.join(path, file)
             pathmove = os.path.join(move_to, path)
             shutil.move(filepath, move_to)
-            print(f"Arquivo '{file}' movido para a pasta Bacen pois tem mais de  dias de diferença ")
+            print(f"Arquivo '{file}' movido para a pasta de analise pois tem mais de 5 dias de diferença ")
 
 
 
