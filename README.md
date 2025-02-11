@@ -24,7 +24,7 @@
 
   ### **📚 Aprendizados com o Projeto**
   - Biblioteca `dotenv`: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.  
-    **Como usar**  
+    **💻 Como usar**  
     1- Instalar biblioteca:  
     `pip install python-dotenv`  
     2- Criar arquivo .env  
@@ -34,9 +34,9 @@
      ```
      from dotenv import load_dotenv #importando biblioteca para o arquivo
 
-     load_dotenv() #chamando função responsável por carregar variáveis no código fonte
+     load_dotenv() #chamando função responsável por carregar variáveis do arquivo .env
 
-     password = os.getenv("PASS") #exemplo de chamada váriavel 
+     password = os.getenv("PASS") # Acessando uma variável específica
      ```  
 
   - Comparação entre listas sem a necessidade de um loop:
