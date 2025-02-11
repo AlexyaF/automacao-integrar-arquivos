@@ -23,8 +23,8 @@
 - `integrar` → Responsável pelo upload dos arquivos na interface web, incluindo tratamento de exceções, espera de resposta e armazenamento dos resultados.
 
   ### **📚 Aprendizados com o Projeto**
-  - Biblioteca `dotenv`: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.
-    **código fonte**
+  - Biblioteca `dotenv`: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.  
+    **Código fonte**
     <sub> O arquivo .env deve estar sempre contigo no arquivo .gitignore para fazer jus a sua proposta de manter informações sensíveis fora do código fonte </sub>
      ```
      from dotenv import load_dotenv #importando biblioteca para o arquivo
@@ -33,7 +33,7 @@
 
      password = os.getenv("PASS") #exemplo de chamada váriavel 
      ```
-     **Arquivo .env**
+     **Arquivo .env**  
     `PASS=EX859`  
   - Comparação entre listas sem a necessidade de um loop:
   - Usar console navegador (DevTools):
