@@ -1,5 +1,5 @@
 # 📜 Sobre o Projeto  
-## **Este repositório tem como intuito a automatização do download de arquivos de um servidor FTP, sua integração em um sistema web via Selenium e a organização e armazenamento dos arquivos localmente.**
+**Este repositório tem como intuito a automatização do download de arquivos de um servidor FTP, sua integração em um sistema web via Selenium e a organização e armazenamento dos arquivos localmente.**
 
 ### **🚀 Principais funcionalidades:**  
 - Conexão automática com o servidor FTP  
