@@ -1,4 +1,4 @@
-# 📜 Sobre o Projeto  
+# Sobre o Projeto  
 **Este repositório tem como intuito a automatização do download de arquivos de um servidor FTP, sua integração em um sistema web via Selenium e a organização e armazenamento dos arquivos localmente.**
 
 ### **🚀 Principais funcionalidades:**  
@@ -24,7 +24,7 @@
 
 ### **📚 Aprendizados com o Projeto**
   - Biblioteca `dotenv`: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.  
-    **💻 Como usar**  
+    **Como usar?**  
     1- Instalar biblioteca:  
     ``` 
     pip install python-dotenv
