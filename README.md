@@ -44,4 +44,26 @@
      ```  
 
   - Comparação entre listas sem a necessidade de um loop:
+      Aprendi que para realizar uma comparação entre listas não tem a necessidade de um loop com uma das listas de referência (jeito que até entao eu utilizava).
+      ```
+      # Listas para armazenar os itens únicos
+      itens_unicos_exemplo1 = []
+      
+      # Comparação utilizando loop
+      for item in exemplo1:
+          if item not in exemplo2:
+              itens_unicos_exemplo1.append(item) 
+      ```
+
+      Existe a possibilidade de usar aabordagem de conjuntos, basta utilizar a conversão para `set()`,que elimina duplicatas e permite a comparação direta entre elementos de duas listas.
+    ```
+      #Listas de exemplo
+      exemplo1 = [1, 2, 3, 4, 5]
+      exemplo2 = [4, 5, 6, 7]
+      
+      # Comparação usando set
+      itens_unicos_exemplo1 = list(set(exemplo1) - set(exemplo2))
+      itens_unicos_exemplo2 = list(set(exemplo2) - set(exemplo1))
+      
+    ```
   - Usar console navegador (DevTools):
