@@ -43,7 +43,7 @@
      password = os.getenv("PASS") # Acessando uma variável específica
      ```  
 
-  - Comparação entre listas sem a necessidade de um loop:
+  - Comparação entre listas sem a necessidade de um loop:  
       Aprendi que para realizar uma comparação entre listas não tem a necessidade de um loop com uma das listas de referência (jeito que até entao eu utilizava).
       ```
       # Listas para armazenar os itens únicos
