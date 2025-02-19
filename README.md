@@ -8,10 +8,9 @@
 - Captura e armazenamento das respostas do sistema  
 - Geração de um relatório em Excel  
 - Envio automático do relatório para os líderes da equipe  
-  
 
 ### **🛠️ Tecnologias Utilizadas**
-- Python 🐍
+- Python 
 - Selenium para automação web
 - Pandas para manipulação de dados
 - FTP Library para conexão com o servidor
@@ -25,16 +24,16 @@
 ### **📚 Aprendizados com o Projeto**
   - Biblioteca `dotenv`: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.  
     **Como usar?**  
-    1- Instalar biblioteca:  
+      1- Instalar biblioteca:  
     ``` 
     pip install python-dotenv
     ```  
-    2- Criar arquivo .env:  
+      2- Criar arquivo .env:  
     <sub> O arquivo .env não deve ser comitado no Git. Para garantir isso, adicione o arquivo .env ao arquivo .gitignore </sub>  
     ```
     PASS=EX859
     ```  
-    3- Importar biblioteca e utilizar função para carregar variáves:  
+      3- Importar biblioteca e utilizar função para carregar variáves:  
      ```
      from dotenv import load_dotenv #importando biblioteca para o arquivo
 
@@ -55,7 +54,7 @@
               itens_unicos_exemplo1.append(item) 
       ```
 
-      Existe a possibilidade de usar aabordagem de conjuntos, basta utilizar a conversão para `set()`,que elimina duplicatas e permite a comparação direta entre elementos de duas listas.
+      Existe a possibilidade de usar abordagem de conjuntos.
     ```
       #Listas de exemplo
       exemplo1 = [1, 2, 3, 4, 5]
@@ -65,5 +64,8 @@
       itens_unicos_exemplo1 = list(set(exemplo1) - set(exemplo2))
       itens_unicos_exemplo2 = list(set(exemplo2) - set(exemplo1))
       
-    ```
+    ```  
+        - O conjunto à esquerda do operador de subtração **sempre** serve como referência na comparação, resultando apenas em seus elementos exclusivos, ou seja, aqueles que não estão presentes no conjunto à direita.  
+        -`set()`: Elimina duplicatas e permite a comparação direta entre elementos de duas listas.  
+        -list(..):  Converte o resultado de volta para uma lista.  
   - Usar console navegador (DevTools):
