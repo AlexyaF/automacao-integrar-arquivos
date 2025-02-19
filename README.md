@@ -76,7 +76,7 @@ Durante o desenvolvimento do projeto, precisei interagir com um elemento de uplo
     2.    Listagem dos objetos dentro do iframe: O DevTools permitiu visualizar todos os elementos carregados dentro do iframe, facilitando a localização do campo de upload.
     3.    Confirmação da necessidade de alternância entre contextos: Como os objetos estavam dentro de um iframe, foi necessário usar switch_to.frame("exemplo_frame") antes da interação e switch_to.default_content() para retornar ao contexto principal da página.
   Exemplo do trecho onde o iframe foi manipulado:
-  ```
+```
 for file in files:
     allpath = os.path.join(pathFolder, file)
     texto = None
@@ -89,4 +89,6 @@ for file in files:
     finally:
         navegador.switch_to.default_content()  # Retorna ao contexto principal após a interação
 
-  ```
+```
+
+
