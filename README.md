@@ -45,8 +45,8 @@
   ```
 
 - **Comparação entre listas sem a necessidade de um loop:**  
-    Antes, eu realizava comparações entre listas utilizando um loop para verificar a presença de cada elemento em uma lista de referência. 
-```
+    Antes, eu realizava comparações entre listas utilizando um loop para verificar a presença de cada elemento em uma lista de referência.
+  ```
        #Listas para armazenar os itens únicos
             itens_unicos_exemplo1 = []
             
@@ -54,10 +54,11 @@
             for item in exemplo1:
                 if item not in exemplo2:
                     itens_unicos_exemplo1.append(item) 
-```
+  ```
+
     No entanto, é possível utilizar conjuntos (set) para tornar essa comparação mais eficiente e legível.  
-    **Exemplo usando conjuntos (set):**  
-```
+    **Exemplo usando conjuntos (set):**
+  ```
            #Listas de exemplo
             exemplo1 = [1, 2, 3, 4, 5]
             exemplo2 = [4, 5, 6, 7]
@@ -65,7 +66,7 @@
             # Comparação usando set
             itens_unicos_exemplo1 = list(set(exemplo1) - set(exemplo2))
             itens_unicos_exemplo2 = list(set(exemplo2) - set(exemplo1))
-```
+  ```  
     - O conjunto à esquerda do operador de subtração **sempre** serve como referência na comparação, resultando apenas em seus elementos exclusivos, ou seja, aqueles que não estão presentes no conjunto à direita. 
     - `set()`: Elimina duplicatas e permite a comparação direta entre elementos de duas listas.  
     - list(..):  Converte o resultado de volta para uma lista.  
