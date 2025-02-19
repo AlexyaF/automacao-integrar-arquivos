@@ -67,6 +67,6 @@ No entanto, é possível utilizar conjuntos (set) para tornar essa comparação 
         itens_unicos_exemplo2 = list(set(exemplo2) - set(exemplo1))
   ```
 - O conjunto à esquerda do operador de subtração **sempre** serve como referência na comparação, resultando apenas em seus elementos exclusivos, ou seja, aqueles que não estão presentes no conjunto à direita. 
--`set()`: Elimina duplicatas e permite a comparação direta entre elementos de duas listas.  
--list(..):  Converte o resultado de volta para uma lista.  
+- `set()`: Elimina duplicatas e permite a comparação direta entre elementos de duas listas.  
+- list(..):  Converte o resultado de volta para uma lista.  
   **- Usar console navegador (DevTools):**  
