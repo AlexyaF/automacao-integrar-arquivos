@@ -22,7 +22,7 @@
 - `integrar` → Responsável pelo upload dos arquivos na interface web, incluindo tratamento de exceções, espera de resposta e armazenamento dos resultados.
 
 ### **📚 Aprendizados com o Projeto**  
-**- Biblioteca `dotenv`**: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.  
+- **Biblioteca `dotenv`**: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.  
 Como usar?
 1- Instalar biblioteca:  
     ``` 
@@ -44,7 +44,7 @@ Como usar?
        
   ```
 
-**- Comparação entre listas sem a necessidade de um loop:**  
+- **Comparação entre listas sem a necessidade de um loop:**  
 Antes, eu realizava comparações entre listas utilizando um loop para verificar a presença de cada elemento em uma lista de referência. 
    ```
    #Listas para armazenar os itens únicos
@@ -69,4 +69,4 @@ No entanto, é possível utilizar conjuntos (set) para tornar essa comparação 
 - O conjunto à esquerda do operador de subtração **sempre** serve como referência na comparação, resultando apenas em seus elementos exclusivos, ou seja, aqueles que não estão presentes no conjunto à direita. 
 - `set()`: Elimina duplicatas e permite a comparação direta entre elementos de duas listas.  
 - list(..):  Converte o resultado de volta para uma lista.  
-  **- Usar console navegador (DevTools):**  
+  - **Usar console navegador (DevTools):**  
