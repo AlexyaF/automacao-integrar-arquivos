@@ -70,7 +70,7 @@
     - `set()`: Elimina duplicatas e permite a comparação direta entre elementos de duas listas.  
     - list(..):  Converte o resultado de volta para uma lista.  
 - **Usar console navegador (DevTools):**
-Durante o desenvolvimento do projeto, precisei interagir com um elemento de upload de arquivos que, inicialmente, não estava visível na inspeção padrão do DOM. Para solucionar esse problema, utilizei o DevTools do navegador para identificar a presença de um iframe que encapsulava os objetos necessários para a automação.
+Durante o desenvolvimento do projeto, precisei interagir com um elemento de upload de arquivos que, inicialmente, não estava visível na inspeção padrão do DOM. Para solucionar esse problema, utilizei o DevTools do navegador para identificar a presença de um iframe que encapsulava os objetos necessários para a automação.  
 **Como o DevTools ajudou?**
     1.    Identificação do nome do iframe: Na inspeção inicial, os elementos do upload não apareciam diretamente na árvore do DOM. Com o DevTools, pude verificar que estavam dentro de um iframe.
     2.    Listagem dos objetos dentro do iframe: O DevTools permitiu visualizar todos os elementos carregados dentro do iframe, facilitando a localização do campo de upload.
