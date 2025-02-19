@@ -22,7 +22,7 @@
 - `integrar` → Responsável pelo upload dos arquivos na interface web, incluindo tratamento de exceções, espera de resposta e armazenamento dos resultados.
 
 ### **📚 Aprendizados com o Projeto**
-  - Biblioteca `dotenv`: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.  
+  **- Biblioteca `dotenv`**: Ajuda a manter credências e variáveis sensíveis fora do codígo fonte, permitindo que você carregue as váriaveis de um arquivo .env para o código principal.  
     **Como usar?**  
       1- Instalar biblioteca:  
     ``` 
@@ -42,8 +42,8 @@
      password = os.getenv("PASS") # Acessando uma variável específica
      ```  
 
-  - Comparação entre listas sem a necessidade de um loop:  
-      Aprendi que para realizar uma comparação entre listas não tem a necessidade de um loop com uma das listas de referência (jeito que até entao eu utilizava).
+  **- Comparação entre listas sem a necessidade de um loop:**  
+      Antes, eu realizava comparações entre listas utilizando um loop para verificar a presença de cada elemento em uma lista de referência.
       ```
       # Listas para armazenar os itens únicos
       itens_unicos_exemplo1 = []
@@ -54,7 +54,9 @@
               itens_unicos_exemplo1.append(item) 
       ```
 
-      Existe a possibilidade de usar abordagem de conjuntos.
+      No entanto, é possível utilizar conjuntos (set) para tornar essa comparação mais eficiente e legível.
+
+      **Exemplo usando conjuntos (set):**
     ```
       #Listas de exemplo
       exemplo1 = [1, 2, 3, 4, 5]
@@ -63,9 +65,8 @@
       # Comparação usando set
       itens_unicos_exemplo1 = list(set(exemplo1) - set(exemplo2))
       itens_unicos_exemplo2 = list(set(exemplo2) - set(exemplo1))
-      
-    ```  
+    ```
         - O conjunto à esquerda do operador de subtração **sempre** serve como referência na comparação, resultando apenas em seus elementos exclusivos, ou seja, aqueles que não estão presentes no conjunto à direita.  
         -`set()`: Elimina duplicatas e permite a comparação direta entre elementos de duas listas.  
         -list(..):  Converte o resultado de volta para uma lista.  
-  - Usar console navegador (DevTools):
+  **- Usar console navegador (DevTools):**  
