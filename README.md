@@ -44,8 +44,7 @@
 
   ```
 
-- **Comparação entre listas sem a necessidade de um loop:**  
-    Antes, eu realizava comparações entre listas utilizando um loop para verificar a presença de cada elemento em uma lista de referência.
+- **Comparação entre listas sem a necessidade de um loop:** Antes, eu realizava comparações entre listas utilizando um loop para verificar a presença de cada elemento em uma lista de referência.
   ```
        #Listas para armazenar os itens únicos
             itens_unicos_exemplo1 = []
@@ -76,3 +75,18 @@ Durante o desenvolvimento do projeto, precisei interagir com um elemento de uplo
     1.    Identificação do nome do iframe: Na inspeção inicial, os elementos do upload não apareciam diretamente na árvore do DOM. Com o DevTools, pude verificar que estavam dentro de um iframe.
     2.    Listagem dos objetos dentro do iframe: O DevTools permitiu visualizar todos os elementos carregados dentro do iframe, facilitando a localização do campo de upload.
     3.    Confirmação da necessidade de alternância entre contextos: Como os objetos estavam dentro de um iframe, foi necessário usar switch_to.frame("exemplo_frame") antes da interação e switch_to.default_content() para retornar ao contexto principal da página.
+  Exemplo do trecho onde o iframe foi manipulado:
+  ```
+for file in files:
+    allpath = os.path.join(pathFolder, file)
+    texto = None
+    try:
+        # Upload do arquivo
+        navegador.switch_to.frame("exemplo_frame")  # Alterna para o iframe identificado no DevTools
+        input_element = wait.until(EC.visibility_of_element_located((By.ID, 'campoDeUpload'))) #Id localizado dentro do iframe
+        input_element.send_keys(allpath) #Upload arquivo
+        navegador.find_element('xpath', '//*[@id="botaoDeEnvio"]').click() 
+    finally:
+        navegador.switch_to.default_content()  # Retorna ao contexto principal após a interação
+
+  ```
