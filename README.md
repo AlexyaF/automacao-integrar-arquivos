@@ -17,7 +17,7 @@
 - OpenPyXL para geração do relatório em Excel
 
 ### **⚙️ Principais Funções**  
-- `mover_arquivos_processado` → Responsável por verificar e mover arquivos já integrados para as pastas corretas. Se um arquivo for enviado para a pasta de "processado" por engano, ele ainda será integrado, minimizando falhas na automação.
+- `mover_arquivos_processado` → Responsável por verificar e mover arquivos já integrados. Se um arquivo for enviado para a pasta de "processado" por engano, ele ainda será integrado, minimizando falhas na automação.
 - `mover_arquivos_txt` → Identifica arquivos que ainda não foram processados (aqueles que não estão em nenhuma pasta específica). Após o processamento, a função move os arquivos para a pasta de "processado".
 - `integrar` → Responsável pelo upload dos arquivos na interface web, incluindo tratamento de exceções, espera de resposta e armazenamento dos resultados.
 
